@@ -1,9 +1,10 @@
+from lib2to3.pgen2 import driver
 import pytest
 import logging
+from appium.webdriver.common.appiumby import AppiumBy
 from selenium.common.exceptions import NoSuchElementException
 
-from tests.login.conftest import ADD_HUB_BUTTON, SNACKBAR
-
+# from tests.login.conftest import ADD_HUB_BUTTON, SNACKBAR
 
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
@@ -18,6 +19,9 @@ logging.basicConfig(level=logging.INFO,
             pytest.param('automation@gmail.com',
                          'qa_automation_password',
                          id='login with invalid email'),
+            pytest.param('incorrect.email',
+                         'qa_automation_password',
+                         id='login with incorrect email'),
         ]
 )
 def test_failed_login(user_login_fixture, email, password):
@@ -26,7 +30,7 @@ def test_failed_login(user_login_fixture, email, password):
 
     user_login_fixture.login(email, password)
     try:
-        element = user_login_fixture.find_element(*SNACKBAR)
+        element = user_login_fixture.find_element(*(AppiumBy.ID, 'com.ajaxsystems:id/snackbar_text'))
         assert element.is_displayed()
         logging.info('Test passed, Snackbar element is present.')
     except NoSuchElementException:
@@ -43,7 +47,7 @@ def test_successful_login(user_login_fixture):
 
     user_login_fixture.login(email, password)
     try:
-        element = user_login_fixture.find_element(*ADD_HUB_BUTTON)
+        element = user_login_fixture.find_element(*(AppiumBy.ID, 'com.ajaxsystems:id/hubAdd'))
         assert element.is_displayed()
         logging.info('Test passed, AddHub element is present.')
     except NoSuchElementException:

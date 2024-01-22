@@ -27,3 +27,4 @@ def run_appium_server():
 def driver(run_appium_server):
     driver = webdriver.Remote('http://localhost:4723', options=options)
     yield driver
+    
