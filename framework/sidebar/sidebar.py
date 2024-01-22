@@ -1,7 +1,5 @@
-from appium.webdriver.common.touch_action import TouchAction
-from content import (SIDEBAR_BUTTON, ADD_HUB_BUTTON, CCTV_BUTTON,
-                     DOC_BUTTON, HELP_BUTTON, REPORT_PROBLEM_BUTTON,
-                     SETTINGS_BUTTON,)
+from content import (ADD_HUB_BUTTON, CCTV_BUTTON, DOC_BUTTON, HELP_BUTTON,
+                     REPORT_PROBLEM_BUTTON, SETTINGS_BUTTON, SIDEBAR_BUTTON)
 
 from framework.page import Page
 
