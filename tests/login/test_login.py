@@ -2,6 +2,8 @@ import pytest
 import logging
 from selenium.common.exceptions import NoSuchElementException
 
+from tests.login.conftest import ADD_HUB_BUTTON, SNACKBAR
+
 
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
@@ -18,26 +20,26 @@ logging.basicConfig(level=logging.INFO,
                          id='login with invalid email'),
         ]
 )
-def test_failed_login(user_login_fixture, email, password, SNACKBAR):
-    logging.info(f'Running test_failed_login with email:'
-                 '{email}, password: {password}')
+def test_failed_login(user_login_fixture, email, password):
+    logging.info(('Running test_failed_login with email:'
+                  f'{email}, password: {password}'))
 
     user_login_fixture.login(email, password)
     try:
         element = user_login_fixture.find_element(*SNACKBAR)
         assert element.is_displayed()
-        logging.info('Test failed as expected, Snackbar element is present.')
+        logging.info('Test passed, Snackbar element is present.')
     except NoSuchElementException:
-        logging.error('Test failed.'
-                      'Snackbar element is not present on the page.')
+        logging.error(('Test failed.'
+                       'Snackbar element is not present on the page.'))
         pytest.fail('Snackbar element is not present on the page.')
 
 
-def test_successful_login(user_login_fixture, ADD_HUB_BUTTON):
+def test_successful_login(user_login_fixture):
     email = 'qa.ajax.app.automation@gmail.com'
     password = 'qa_automation_password'
-    logging.info(f'Running test_successful_login with email: '
-                 '{email}, password: {password}')
+    logging.info(('Running test_successful_login with email: '
+                  f'{email}, password: {password}'))
 
     user_login_fixture.login(email, password)
     try:
@@ -45,6 +47,6 @@ def test_successful_login(user_login_fixture, ADD_HUB_BUTTON):
         assert element.is_displayed()
         logging.info('Test passed, AddHub element is present.')
     except NoSuchElementException:
-        logging.error('Test failed. '
-                      'AddHub element is not present on the page.')
+        logging.error(('Test failed. '
+                       'AddHub element is not present on the page.'))
         pytest.fail('AddHub element is not present on the page.')
