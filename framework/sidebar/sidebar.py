@@ -1,16 +1,16 @@
-from framework.page import Page
-from content import (SETTINGS_BUTTON,
-                     HELP_BUTTON,
-                     REPORT_PROBLEM_BUTTON,
-                     CCTV_BUTTON,
-                     ADD_HUB_BUTTON,
-                     DOC_BUTTON,
-                     WINDOW_HEIGHT,
-                     WINDOW_WIDTH,)
 from appium.webdriver.common.touch_action import TouchAction
+from content import (SIDEBAR_BUTTON, ADD_HUB_BUTTON, CCTV_BUTTON,
+                     DOC_BUTTON, HELP_BUTTON, REPORT_PROBLEM_BUTTON,
+                     SETTINGS_BUTTON,)
+
+from framework.page import Page
 
 
 class SideBar(Page):
+    def open_sidebar(self):
+        sidebar_button = self.find_element(*SIDEBAR_BUTTON)
+        self.click_element(sidebar_button)
+
     def click_settings_button(self):
         settings_button = self.find_element(*SETTINGS_BUTTON)
         self.click_element(settings_button)
@@ -34,13 +34,3 @@ class SideBar(Page):
     def click_doc_button(self):
         doc_button = self.find_element(*DOC_BUTTON)
         self.click_element(doc_button)
-
-    def close_sidebar(self):
-        start_x = int(WINDOW_HEIGHT * 0.2)
-        end_x = int(WINDOW_WIDTH * 0.8)
-        y = int(WINDOW_HEIGHT * 0.5)
-
-        swipe = TouchAction(self.driver)
-        swipe.long_press(x=start_x,
-                         y=y).move_to(x=end_x,
-                                      y=y).release().perform()
