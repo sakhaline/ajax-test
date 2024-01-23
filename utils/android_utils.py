@@ -1,6 +1,20 @@
 import subprocess
 
 
+def get_device_udid():
+    try:
+        result = subprocess.run(['adb', 'devices'], capture_output=True, text=True, check=True)
+        output_lines = result.stdout.splitlines()
+        if len(output_lines) > 1:
+            udid = output_lines[1].split('\t')[0].strip()
+            return udid
+        else:
+            return None
+    except subprocess.CalledProcessError as e:
+        print(f"Error running adb devices: {e}")
+        return None
+
+
 def android_get_desired_capabilities():
     return {
         'autoGrantPermissions': True,
@@ -16,17 +30,3 @@ def android_get_desired_capabilities():
         'appPackage': 'com.ajaxsystems',
         'appActivity': 'com.ajaxsystems.ui.activity.LauncherActivity'
     }
-
-
-def get_device_udid():
-    try:
-        result = subprocess.run(['adb', 'devices'], capture_output=True, text=True, check=True)
-        output_lines = result.stdout.splitlines()
-        if len(output_lines) > 1:
-            udid = output_lines[1].split('\t')[0].strip()
-            return udid
-        else:
-            return None
-    except subprocess.CalledProcessError as e:
-        print(f"Error running adb devices: {e}")
-        return None
