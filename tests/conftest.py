@@ -7,8 +7,9 @@ from appium.options.android import UiAutomator2Options
 
 from utils.android_utils import android_get_desired_capabilities
 
-
-options = UiAutomator2Options().load_capabilities(android_get_desired_capabilities())
+options = UiAutomator2Options().load_capabilities(
+    android_get_desired_capabilities()
+)
 
 
 @pytest.fixture(scope='session')
@@ -27,4 +28,3 @@ def run_appium_server():
 def driver(run_appium_server):
     driver = webdriver.Remote('http://localhost:4723', options=options)
     yield driver
-    

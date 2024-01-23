@@ -1,27 +1,25 @@
-from selenium.webdriver.support import expected_conditions as EC
-from framework.login_page.content import (LOGIN_BUTTON, PASSWORD_FIELD,
-                                          USERNAME_FIELD, CONFIRM_BUTTON)
-
+from .content import (CONFIRM_BUTTON, LOGIN_BUTTON,
+                      PASSWORD_FIELD, USERNAME_FIELD)
 from framework.page import Page
 
 
 class LoginPage(Page):
     def click_login_button(self):
-        login_button = self.find_element(*LOGIN_BUTTON)
+        login_button = self.find_element_with_waiting(*LOGIN_BUTTON)
         self.click_element(login_button)
 
     def enter_email(self, email):
-        username_field = self.find_element(*USERNAME_FIELD)
+        username_field = self.find_element_with_waiting(*USERNAME_FIELD)
         self.clear_field(username_field)
         self.send_keys_to_element(username_field, email)
 
     def enter_password(self, password):
-        password_field = self.find_element(*PASSWORD_FIELD)
+        password_field = self.find_element_with_waiting(*PASSWORD_FIELD)
         self.clear_field(password_field)
         self.send_keys_to_element(password_field, password)
 
     def click_confirm_button(self):
-        confirm_button = self.find_element(*CONFIRM_BUTTON)
+        confirm_button = self.find_element_with_waiting(*CONFIRM_BUTTON)
         self.click_element(confirm_button)
 
     def login(self, email, password):

@@ -1,13 +1,15 @@
-from lib2to3.pgen2 import driver
-import pytest
 import logging
-from appium.webdriver.common.appiumby import AppiumBy
+
+import pytest
 from selenium.common.exceptions import NoSuchElementException
 
-# from tests.login.conftest import ADD_HUB_BUTTON, SNACKBAR
+from framework.login_page.content import ADD_HUB, SNACKBAR
+
 
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
+
+LOGGER = logging.getLogger(__name__)
 
 
 @pytest.mark.parametrize(
@@ -24,33 +26,33 @@ logging.basicConfig(level=logging.INFO,
                          id='login with incorrect email'),
         ]
 )
-def test_failed_login(user_login_fixture, email, password):
-    logging.info(('Running test_failed_login with email:'
-                  f'{email}, password: {password}'))
+def test_failed_login(user_login_fixture, user_logout_fixture,
+                      email, password):
+    LOGGER.info(f'Running test_failed_login with email: {email}, password: {password}')
 
     user_login_fixture.login(email, password)
     try:
-        element = user_login_fixture.find_element(*(AppiumBy.ID, 'com.ajaxsystems:id/snackbar_text'))
+        element = user_login_fixture.find_element_with_waiting(*SNACKBAR)
         assert element.is_displayed()
-        logging.info('Test passed, Snackbar element is present.')
+        LOGGER.info('Test passed, Snackbar element is present.')
     except NoSuchElementException:
-        logging.error(('Test failed.'
-                       'Snackbar element is not present on the page.'))
+        LOGGER.error('Test failed. Snackbar element is not present on the page.')
         pytest.fail('Snackbar element is not present on the page.')
+    finally:
+        user_login_fixture.navigate_to_starting_page()
 
 
 def test_successful_login(user_login_fixture):
     email = 'qa.ajax.app.automation@gmail.com'
     password = 'qa_automation_password'
-    logging.info(('Running test_successful_login with email: '
-                  f'{email}, password: {password}'))
+
+    LOGGER.info(f'Running test_successful_login with email: {email}, password: {password}')
 
     user_login_fixture.login(email, password)
     try:
-        element = user_login_fixture.find_element(*(AppiumBy.ID, 'com.ajaxsystems:id/hubAdd'))
+        element = user_login_fixture.find_element_with_waiting(*ADD_HUB)
         assert element.is_displayed()
-        logging.info('Test passed, AddHub element is present.')
+        LOGGER.info('Test passed, AddHub element is present.')
     except NoSuchElementException:
-        logging.error(('Test failed. '
-                       'AddHub element is not present on the page.'))
+        LOGGER.error('Test failed. AddHub element is not present on the page.')
         pytest.fail('AddHub element is not present on the page.')

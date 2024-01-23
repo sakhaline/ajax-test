@@ -1,18 +1,13 @@
+from framework.page import Page
 from framework.sidebar.content import (ADD_HUB_BUTTON, CCTV_BUTTON, DOC_BUTTON,
                                        HELP_BUTTON, REPORT_PROBLEM_BUTTON,
-                                       SETTINGS_BUTTON, SIDEBAR_BUTTON)
-
-from framework.page import Page
+                                       SIDEBAR_BUTTON)
 
 
 class SideBar(Page):
     def open_sidebar(self):
-        sidebar_button = self.find_element(*SIDEBAR_BUTTON)
+        sidebar_button = self.find_element_with_waiting(*SIDEBAR_BUTTON)
         self.click_element(sidebar_button)
-
-    def click_settings_button(self):
-        settings_button = self.find_element(*SETTINGS_BUTTON)
-        self.click_element(settings_button)
 
     def click_help_button(self):
         help_button = self.find_element(*HELP_BUTTON)

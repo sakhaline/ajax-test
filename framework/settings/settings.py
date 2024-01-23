@@ -1,6 +1,7 @@
 from framework.page import Page
+from framework.sidebar.content import SETTINGS_BUTTON
 
-from .content import SETTINGS_BUTTON, LOGOUT_BUTTON
+from .content import LOGOUT_BUTTON
 
 
 class Settings(Page):
