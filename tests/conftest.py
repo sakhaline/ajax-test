@@ -7,6 +7,7 @@ from appium.options.android import UiAutomator2Options
 
 from utils.android_utils import android_get_desired_capabilities
 
+
 options = UiAutomator2Options().load_capabilities(
     android_get_desired_capabilities()
 )

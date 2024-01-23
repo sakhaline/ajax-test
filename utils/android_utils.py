@@ -8,7 +8,7 @@ def android_get_desired_capabilities():
         'newCommandTimeout': 500,
         'noSign': True,
         'platformName': 'Android',
-        'platformVersion': '13',
+        'platformVersion': '10',
         'resetKeyboard': True,
         'systemPort': 8301,
         'takesScreenshot': True,
