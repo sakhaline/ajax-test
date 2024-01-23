@@ -6,16 +6,16 @@ from framework.sidebar.sidebar import SideBar
 
 
 @pytest.fixture(scope='function')
-def user_login_fixture(driver):
+def sidebar_fixture(driver):
+    yield SideBar(driver)
+
+
+@pytest.fixture(scope='module')
+def login_logout_fixture(driver):
     login_page = LoginPage(driver)
-    yield login_page
-
-
-@pytest.fixture(scope="module")
-def user_logout_fixture(driver):
+    login_page.login('qa.ajax.app.automation@gmail.com',
+                     'qa_automation_password')
     yield
-    sidebar = SideBar(driver)
-    sidebar.open_sidebar()
     settings = Settings(driver)
     settings.open_settings()
     settings.logout()
